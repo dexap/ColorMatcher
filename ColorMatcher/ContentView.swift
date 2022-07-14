@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     @State var randomColors: [Double] = [0.0, 0.0, 0.0]
-    let randomRed = Double.random(in: 0 ... 1)
-    let randomGreen = Double.random(in: 0 ... 1)
-    let randomBlue = Double.random(in: 0 ... 1)
+    @State var randomRed = Double.random(in: 0 ... 1)
+    @State var randomGreen = Double.random(in: 0 ... 1)
+    @State var randomBlue = Double.random(in: 0 ... 1)
 
     @State var userColors: [Double] = [0.0, 0.0, 0.0]
     @State var userRed = Double.random(in: 0 ... 1)
@@ -19,10 +19,10 @@ struct ContentView: View {
     @State var userBlue = Double.random(in: 0 ... 1)
 
     let colorManager = ColorManager()
-    let storage = Storage()
+    @State var storage = Storage()
     @State private var isShowingAlert = false
-
-
+    @State private var isShowingHighscores = false
+    @State private var isShowingHelp = false
 
 
     var body: some View {
@@ -50,33 +50,83 @@ struct ContentView: View {
                 VerticalSlider(color: .blue, value: $userBlue)
             }
 
-            Button("Hit Me") {
-                userColors[0] = userRed
-                userColors[1] = userGreen
-                userColors[2] = userBlue
+            HStack{
+                Button("Hit Me") {
+                    userColors[0] = userRed
+                    userColors[1] = userGreen
+                    userColors[2] = userBlue
 
-                randomColors[0] = randomRed
-                randomColors[1] = randomGreen
-                randomColors[2] = randomBlue
+                    randomColors[0] = randomRed
+                    randomColors[1] = randomGreen
+                    randomColors[2] = randomBlue
 
-                colorManager.updateScore(userColors, randomColors)
+                    colorManager.updateScore(userColors, randomColors)
+                    storage.saveScore(colorManager.scoreRounded)
 
-                isShowingAlert = true
+                    isShowingAlert = true
+                }
+                .buttonStyle(.bordered)
+                .confirmationDialog("Your Score is \(colorManager.scoreRounded)", isPresented: $isShowingAlert, titleVisibility: .visible)
+                {
+                    Button("Try Again") {
+                        randomRed = Double.random(in: 0 ... 1)
+                        randomGreen = Double.random(in: 0 ... 1)
+                        randomBlue = Double.random(in: 0 ... 1)
+                    }
+                    Button("Highscores") { isShowingHighscores = true }
+                }
 
-            }
-            .buttonStyle(.bordered)
-            .controlSize(.large)
-            .confirmationDialog("Your Score is \(colorManager.scoreRounded)", isPresented: $isShowingAlert, titleVisibility: .visible)
-            {
-                Button("Save", role: .none) { storage.saveScore(colorManager.scoreRounded) }
-                Button("Cancel", role: .cancel) { print("Delete Tapped") }
-                    .tint(.red)
+                Button("Highscores") {
+                    isShowingHighscores = true
+                }
+                .buttonStyle(.bordered)
+
+                Button("Help") {
+                    isShowingHelp = true
+                }
+                .buttonStyle(.bordered)
             }
 
             Spacer()
         }
+        .sheet(isPresented: $isShowingHighscores) {
+            HStack{
+                Text("Highscores")
+                    .font(.title)
+                Spacer()
+                Button {
+                    storage.deleteScores()
+                    isShowingHighscores = false
+                } label: {
+                    Label("", systemImage: "trash")
+                }
+                .tint(.red)
 
+            }
+            .padding()
+
+            let orderedSocres = storage.getScores().sorted(by: >)
+            List(orderedSocres, id: \.self) { entry in
+                Label {
+                    Text(String(entry))
+                } icon: {
+                    switch orderedSocres.firstIndex(of: entry) {
+                    case 0: Circle().foregroundColor(.yellow)
+                    case 1: Circle().foregroundColor(.gray)
+                    case 2: Circle().foregroundColor(.brown)
+                    default: Circle().foregroundColor(.init(.sRGB, white: 0.8, opacity: 0.15))
+                    }
+                }
+            }
+            .padding(.top, -10)
+        }
+        .sheet(isPresented: $isShowingHelp) {
+            Text("Try to match the color of the right circle to the color of the left Circle and press HIT ME")
+                .padding()
+        }
     }
+
+    init() {}
 }
 
 struct ContentView_Previews: PreviewProvider {

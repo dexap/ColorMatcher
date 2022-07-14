@@ -8,9 +8,9 @@
 import Foundation
 
 class Storage {
-    let userDefaults = UserDefaults.standard
+    private let userDefaults = UserDefaults.standard
 
-    func saveScore(_ score: Int){
+    func saveScore(_ score: Int) {
         var scores: [Int] = userDefaults.object(forKey: "scores") as? [Int] ?? [Int]()
         scores.append(score)
         scores = Array(Set(scores))
@@ -20,4 +20,13 @@ class Storage {
         print(scores)
     }
 
+    func getScores() -> [Int] {
+        return userDefaults.object(forKey: "scores") as? [Int] ?? [Int]()
+    }
+
+    func deleteScores() {
+        let empty: [Int] = []
+        userDefaults.set(empty, forKey: "scores")
+        userDefaults.synchronize()
+    }
 }

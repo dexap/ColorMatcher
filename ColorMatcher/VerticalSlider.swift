@@ -31,7 +31,6 @@ struct VerticalSlider: View {
             .buttonStyle(.bordered)
             .tint(color)
 
-
             ZStack {
                 RoundedRectangle(cornerRadius: .infinity)
                     .frame(width: 2, height: viewHeight)
@@ -59,7 +58,6 @@ struct VerticalSlider: View {
             }.foregroundColor(color)
                 .buttonStyle(.bordered)
                 .tint(color)
-
 
             Text("\(value.toRange())")
                 .bold()

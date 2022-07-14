@@ -13,9 +13,9 @@ class ColorManager: ObservableObject {
 
     func updateScore(_ userColors: [Double], _ randomColors: [Double]) {
         var differences: [Double] = []
-        let redDiff =   abs(userColors[0] - randomColors[0])
+        let redDiff = abs(userColors[0] - randomColors[0])
         let greenDiff = abs(userColors[1] - randomColors[1])
-        let blueDiff =  abs(userColors[2] - randomColors[2])
+        let blueDiff = abs(userColors[2] - randomColors[2])
 
         differences.append(redDiff)
         differences.append(greenDiff)
@@ -31,7 +31,5 @@ class ColorManager: ObservableObject {
         scoreRounded = Int((difference - 100) * -1) + 1
         print("score        = \(score)")
         print("scoreRounded = \(scoreRounded)")
-
     }
-
 }
