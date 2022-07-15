@@ -1,10 +1,3 @@
-//
-//  Storage.swift
-//  ColorMatcher
-//
-//  Created by Benjamin Lassmann on 13.07.22.
-//
-
 import Foundation
 
 class Storage {

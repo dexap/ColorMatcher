@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  ColorMatcher
-//
-//  Created by Benjamin Lassmann on 13.07.22.
-//
-
 import SwiftUI
 
 struct ContentView: View {
@@ -23,11 +16,12 @@ struct ContentView: View {
     @State private var isShowingAlert = false
     @State private var isShowingHighscores = false
     @State private var isShowingHelp = false
-
+    @State private var isShowingDelete = false
 
     var body: some View {
         VStack {
             Spacer()
+
             ZStack {
                 // rechts
                 Circle()
@@ -43,6 +37,9 @@ struct ContentView: View {
             }
             .shadow(radius: 10)
             .padding(.bottom, 20)
+            .padding(.top, -30)
+
+            Spacer()
 
             HStack {
                 VerticalSlider(color: .red, value: $userRed)
@@ -50,8 +47,20 @@ struct ContentView: View {
                 VerticalSlider(color: .blue, value: $userBlue)
             }
 
-            HStack{
-                Button("Hit Me") {
+            Spacer()
+
+            HStack {
+                Spacer()
+                Button("?") {
+                    isShowingHelp = true
+                }
+                .frame(width: 50)
+                .buttonStyle(.bordered)
+                .controlSize(.mini)
+
+                Spacer()
+
+                Button("Hit me") {
                     userColors[0] = userRed
                     userColors[1] = userGreen
                     userColors[2] = userBlue
@@ -66,8 +75,11 @@ struct ContentView: View {
                     isShowingAlert = true
                 }
                 .buttonStyle(.bordered)
-                .confirmationDialog("Your Score is \(colorManager.scoreRounded)", isPresented: $isShowingAlert, titleVisibility: .visible)
-                {
+                .controlSize(.mini)
+                .scaleEffect(x: 1.5, y: 1.5, anchor: .center)
+                .tint(Color(red: userRed, green: userGreen, blue: userBlue))
+                .foregroundColor(.accentColor)
+                .alert("Your Score is \(colorManager.scoreRounded)", isPresented: $isShowingAlert) {
                     Button("Try Again") {
                         randomRed = Double.random(in: 0 ... 1)
                         randomGreen = Double.random(in: 0 ... 1)
@@ -76,34 +88,58 @@ struct ContentView: View {
                     Button("Highscores") { isShowingHighscores = true }
                 }
 
-                Button("Highscores") {
-                    isShowingHighscores = true
-                }
-                .buttonStyle(.bordered)
+                Spacer()
 
-                Button("Help") {
-                    isShowingHelp = true
+                Button {
+                    isShowingHighscores = true
+                } label: {
+                    Image(systemName: "list.number")
                 }
+                .frame(width: 50)
                 .buttonStyle(.bordered)
+                .controlSize(.mini)
+                Spacer()
             }
+            .padding(.horizontal)
 
             Spacer()
         }
+
+        // Highscores Sheet
         .sheet(isPresented: $isShowingHighscores) {
-            HStack{
+            // Kopfleiste
+            HStack {
                 Text("Highscores")
                     .font(.title)
+                    .bold()
                 Spacer()
+
                 Button {
-                    storage.deleteScores()
-                    isShowingHighscores = false
+                    isShowingDelete = true
                 } label: {
-                    Label("", systemImage: "trash")
+                    Label("Delete", systemImage: "trash")
                 }
                 .tint(.red)
+                .buttonStyle(.bordered)
+                .controlSize(.mini)
+                .padding(.horizontal)
+                .alert("Are you sure?", isPresented: $isShowingDelete) {
+                    Button("Delete", role: .destructive) {
+                        storage.deleteScores()
+                        isShowingDelete = false
+                        isShowingHighscores = false
+                    }
+                }
 
+                Button {
+                    isShowingHighscores = false
+                } label: {
+                    Label("", systemImage: "x.circle")
+                }
+                .padding(.trailing, -10)
             }
-            .padding()
+            .padding(.top, 10)
+            .padding(.horizontal, 20)
 
             let orderedSocres = storage.getScores().sorted(by: >)
             List(orderedSocres, id: \.self) { entry in
@@ -121,12 +157,14 @@ struct ContentView: View {
             .padding(.top, -10)
         }
         .sheet(isPresented: $isShowingHelp) {
-            Text("Try to match the color of the right circle to the color of the left Circle and press HIT ME")
+            Text("Try to match the color of the right circle to the color of the left Circle by draging the sliders.\n\nConfirm your coice with the \"HIT ME\"-Button!")
                 .padding()
+                .background {
+                    RoundedRectangle(cornerRadius: 30)
+                        .foregroundColor(Color(.sRGB, white: 0.2, opacity: 0.2))
+                }
         }
     }
-
-    init() {}
 }
 
 struct ContentView_Previews: PreviewProvider {
