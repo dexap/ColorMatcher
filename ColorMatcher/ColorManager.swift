@@ -1,8 +1,15 @@
 import Foundation
 
-class ColorManager: ObservableObject {
-    var score: Double = 0
-    var scoreRounded: Int = 0
+class ColorManager {
+    private var score: Double?
+
+    var roundedScore: Int {
+        guard let score = score else {
+            print("Calculating Score failed")
+            return 0
+        }
+        return Int(score.rounded(.toNearestOrEven))
+    }
 
     func updateScore(_ userColors: [Double], _ randomColors: [Double]) {
         var differences: [Double] = []
@@ -21,8 +28,7 @@ class ColorManager: ObservableObject {
         let difference = differences.sum() / 3 * 100
         print("difference   = \(difference)")
         score = (difference - 100) * -1
-        scoreRounded = Int((difference - 100) * -1) + 1
-        print("score        = \(score)")
-        print("scoreRounded = \(scoreRounded)")
+        print("score        = \(score ?? 0.0)")
+        print("scoreRounded = \(roundedScore)")
     }
 }

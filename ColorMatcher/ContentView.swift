@@ -70,7 +70,7 @@ struct ContentView: View {
                     randomColors[2] = randomBlue
 
                     colorManager.updateScore(userColors, randomColors)
-                    storage.saveScore(colorManager.scoreRounded)
+                    storage.saveScore(colorManager.roundedScore)
 
                     isShowingAlert = true
                 }
@@ -79,7 +79,7 @@ struct ContentView: View {
                 .scaleEffect(x: 1.5, y: 1.5, anchor: .center)
                 .tint(Color(red: userRed, green: userGreen, blue: userBlue))
                 .foregroundColor(.accentColor)
-                .alert("Your Score is \(colorManager.scoreRounded)", isPresented: $isShowingAlert) {
+                .alert("Your Score is \(colorManager.roundedScore)", isPresented: $isShowingAlert) {
                     Button("Try Again") {
                         randomRed = Double.random(in: 0 ... 1)
                         randomGreen = Double.random(in: 0 ... 1)
