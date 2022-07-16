@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B58DCD712882AEAD006B9CA6 /* RGB.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58DCD702882AEAD006B9CA6 /* RGB.swift */; };
 		B5B02321287EF4D100E1DDAA /* ColorMatcherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B02320287EF4D100E1DDAA /* ColorMatcherApp.swift */; };
 		B5B02323287EF4D100E1DDAA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B02322287EF4D100E1DDAA /* ContentView.swift */; };
 		B5B02325287EF4D200E1DDAA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B02324287EF4D200E1DDAA /* Assets.xcassets */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B58DCD702882AEAD006B9CA6 /* RGB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RGB.swift; sourceTree = "<group>"; };
 		B5B0231D287EF4D100E1DDAA /* ColorMatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorMatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B02320287EF4D100E1DDAA /* ColorMatcherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorMatcherApp.swift; sourceTree = "<group>"; };
 		B5B02322287EF4D100E1DDAA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				B5B02322287EF4D100E1DDAA /* ContentView.swift */,
 				B5B0234E287EFA1A00E1DDAA /* VerticalSlider.swift */,
 				B5B02350287F036C00E1DDAA /* ColorManager.swift */,
+				B58DCD702882AEAD006B9CA6 /* RGB.swift */,
 				B5B02352287F136300E1DDAA /* Storage.swift */,
 				B5B0234C287EF5DD00E1DDAA /* Extensions.swift */,
 				B5B02324287EF4D200E1DDAA /* Assets.xcassets */,
@@ -273,6 +276,7 @@
 				B5B02353287F136300E1DDAA /* Storage.swift in Sources */,
 				B5B0234F287EFA1A00E1DDAA /* VerticalSlider.swift in Sources */,
 				B5B02351287F036C00E1DDAA /* ColorManager.swift in Sources */,
+				B58DCD712882AEAD006B9CA6 /* RGB.swift in Sources */,
 				B5B02321287EF4D100E1DDAA /* ColorMatcherApp.swift in Sources */,
 				B5B0234D287EF5DD00E1DDAA /* Extensions.swift in Sources */,
 			);

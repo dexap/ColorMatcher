@@ -1,12 +1,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var randomColors: [Double] = [0.0, 0.0, 0.0]
+    @State var randomColorValues: [Double] = [0.0, 0.0, 0.0]
     @State var randomRed = Double.random(in: 0 ... 1)
     @State var randomGreen = Double.random(in: 0 ... 1)
     @State var randomBlue = Double.random(in: 0 ... 1)
 
-    @State var userColors: [Double] = [0.0, 0.0, 0.0]
+    @State var userColorValues: [Double] = [0.0, 0.0, 0.0]
     @State var userRed = Double.random(in: 0 ... 1)
     @State var userGreen = Double.random(in: 0 ... 1)
     @State var userBlue = Double.random(in: 0 ... 1)
@@ -61,15 +61,15 @@ struct ContentView: View {
                 Spacer()
 
                 Button("Hit me") {
-                    userColors[0] = userRed
-                    userColors[1] = userGreen
-                    userColors[2] = userBlue
+                    userColorValues[0] = userRed
+                    userColorValues[1] = userGreen
+                    userColorValues[2] = userBlue
 
-                    randomColors[0] = randomRed
-                    randomColors[1] = randomGreen
-                    randomColors[2] = randomBlue
+                    randomColorValues[0] = randomRed
+                    randomColorValues[1] = randomGreen
+                    randomColorValues[2] = randomBlue
 
-                    colorManager.updateScore(userColors, randomColors)
+                    colorManager.updateScore(userColorValues, randomColorValues)
                     storage.saveScore(colorManager.roundedScore)
 
                     isShowingAlert = true
